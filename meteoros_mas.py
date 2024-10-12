@@ -1,19 +1,9 @@
-# 
-#
-#REMEMBER TO CHANGE THE RANDOM Y FOR THE METEORS.
-#
-#
-#
-
-
 import pygame, random
 
 WIDTH = 800
 HEIGHT = 600
 
 BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)
 
 
 pygame.init()
@@ -30,16 +20,6 @@ def draw_text(surface, text, size, x, y):
 	text_rect.midtop = (x, y)
 	surface.blit(text_surface, text_rect)
 
-def draw_shield_bar(surface, x, y, percentage):
-	BAR_LENGHT = 100
-	BAR_HEIGHT = 10
-	fill = (percentage / 100) * BAR_LENGHT
-	border = pygame.Rect(x, y, BAR_LENGHT, BAR_HEIGHT)
-	fill = pygame.Rect(x, y, fill, BAR_HEIGHT)
-	pygame.draw.rect(surface, GREEN, fill)
-	pygame.draw.rect(surface, WHITE, border, 2)
-
-
 class Player(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
@@ -49,8 +29,6 @@ class Player(pygame.sprite.Sprite):
 		self.rect.centerx = WIDTH // 2
 		self.rect.bottom = HEIGHT - 10
 		self.speed_x = 0
-
-		self.shield = 100
 
 	def update(self):
 		self.speed_x = 0
@@ -69,9 +47,6 @@ class Player(pygame.sprite.Sprite):
 		bullet = Bullet(self.rect.centerx, self.rect.top)
 		all_sprites.add(bullet)
 		bullets.add(bullet)
-
-		#Agregamos sonido
-		#laser_sound.play()
 
 class Meteor(pygame.sprite.Sprite):
 	def __init__(self):
@@ -119,11 +94,6 @@ for img in meteor_list:
 # Cargar fondo.
 background = pygame.image.load("assets/background.png").convert()
 
-# Cargar sonidos
-laser_sound = pygame.mixer.Sound("assets/laser5.ogg")
-explosion_sound = pygame.mixer.Sound("assets/explosion.wav")
-pygame.mixer.music.load("assets/music.ogg")
-pygame.mixer.music.set_volume(0.1)
 
 all_sprites = pygame.sprite.Group()
 meteor_list = pygame.sprite.Group()
@@ -139,7 +109,6 @@ for i in range(8):
 
 #Marcador / Score
 score = 0
-#pygame.mixer.music.play(loops=-1)
 
 # Game Loop
 running = True
@@ -164,24 +133,15 @@ while running:
 	hits = pygame.sprite.groupcollide(meteor_list, bullets, True, True)
 	for hit in hits:
 		score += 1
-		#explosion_sound.play()
 		meteor = Meteor()
 		all_sprites.add(meteor)
 		meteor_list.add(meteor)
 
 		
 	# Colisiones jugador - meteoro
-
-
-	################## CHANGES HERE ################################
-	hits = pygame.sprite.spritecollide(player, meteor_list, True) # Change here
-	for hit in hits:
-		player.shield -= 25
-		meteor = Meteor()
-		all_sprites.add(meteor)
-		meteor_list.add(meteor)
-		if player.shield <= 0:
-			running = False
+	hits = pygame.sprite.spritecollide(player, meteor_list, False)
+	if hits:
+		running = False
 
 	#Draw / Render
 	screen.blit(background, [0, 0])
@@ -189,9 +149,6 @@ while running:
 
 	# Marcador
 	draw_text(screen, str(score), 25, WIDTH // 2, 10)
-
-	# ESCUDO.
-	draw_shield_bar(screen, 5, 5, player.shield)
 
 
 	pygame.display.flip()

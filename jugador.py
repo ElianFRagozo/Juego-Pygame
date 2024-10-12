@@ -1,14 +1,3 @@
-#
-#	En este script creamos la ventana de nuestro juego
-#						y
-#	creamos nuestro jugador y le damos movimiento
-#
-#			Creador: Mundo Python
-#
-#			youtube: Mundo Python
-#
-#
-
 import pygame, random
 
 WIDTH = 800
