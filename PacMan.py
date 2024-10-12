@@ -146,7 +146,7 @@ def show_message(text):
     message_surface = font.render(text, True, WHITE)
     screen.blit(message_surface, (WIDTH // 2 - message_surface.get_width() // 2, HEIGHT // 2 - message_surface.get_height() // 2))
     pygame.display.flip()
-    pygame.time.delay(2000)  # Espera 2 segundos antes de volver al menú
+    pygame.time.delay(2000)
 
 # Modificar la función check_collision para usar el nuevo mensaje
 def check_collision():
