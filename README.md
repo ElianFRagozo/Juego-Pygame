@@ -9,7 +9,7 @@ Para ejecutar el juego, sigue los siguientes pasos:
 
 1. Instala la biblioteca Pygame utilizando pip: `pip install pygame`
 2. Descarga el código del proyecto desde el repositorio de GitHub
-3. Ejecuta el archivo `shooter.py` utilizando Python: `python main.py`
+3. Ejecuta el archivo `shooter.py` utilizando Python: `python shooter.py`
 
 ## Características del juego
 * Control del personaje con las teclas de flecha
